@@ -9,12 +9,16 @@ import {
   VideoLibrary,
 } from "@material-ui/icons";
 import React from "react";
+import { useStateValue } from "../../stateProvider";
 import SidebarRow from "../sidebarRow";
 import { SidebarContainer } from "./styles";
 function Sidebar() {
+
+  const [{user}, dispath] = useStateValue()
+
   return (
     <SidebarContainer>
-      {/* <SidebarRow src={user.photoURL} title={user.displayName} /> */}
+      <SidebarRow src={user.photoURL} title={user.displayName} />
       <SidebarRow Icon={LocalHospital} title="COVID-19 Information Center" />
       <SidebarRow Icon={EmojiFlags} title="Pages" />
       <SidebarRow Icon={People} title="Friends" />

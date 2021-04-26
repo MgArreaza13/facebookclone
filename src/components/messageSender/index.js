@@ -7,22 +7,34 @@ import {
   MessageSenderBottom,
   MessageSenderOptions,
 } from "./styles";
+import { useStateValue } from "../../stateProvider";
+import { db } from "../../firebase";
+import firebase from "firebase";
+
 function MessageSender() {
   const [input, setInput] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [{ user }, dispath] = useStateValue();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    db.collection("posts").add({
+      message: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      profilePic: user.photoURL,
+      username: user.displayName,
+      image: imageUrl,
+    });
 
-    setInput("")
-    setImageUrl("")
+    setInput("");
+    setImageUrl("");
   };
 
   return (
     <MessageSenderContainer>
       <MessageSenderTop>
-        <Avatar />
+        <Avatar src={user.photoURL} />
         <form>
           <input
             value={input}
@@ -31,7 +43,7 @@ function MessageSender() {
             }}
             type="text"
             className="input_post"
-            placeholder="What's on your mind?"
+            placeholder={`What's on your mind? ${user.displayName}`}
           />
           <input
             value={imageUrl}

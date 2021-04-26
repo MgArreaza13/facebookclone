@@ -12,6 +12,7 @@ import {
   SupervisedUserCircle,
 } from "@material-ui/icons";
 import React from "react";
+import { useStateValue } from "../../stateProvider";
 import {
   HeaderContainer,
   HeaderLeft,
@@ -22,6 +23,9 @@ import {
   HeaderRightInfo,
 } from "./styles";
 function Header() {
+
+  const [{user}, dispath] = useStateValue()
+
   return (
     <HeaderContainer>
       <HeaderLeft>
@@ -54,8 +58,8 @@ function Header() {
       </HeaderMiddle>
       <HeaderRight>
         <HeaderRightInfo>
-          <Avatar />
-          <h4>Miguel Arreaza</h4>
+          <Avatar src={user.photoURL}/>
+          <h4>{user.displayName}</h4>
         </HeaderRightInfo>
         <IconButton>
           <Add />
